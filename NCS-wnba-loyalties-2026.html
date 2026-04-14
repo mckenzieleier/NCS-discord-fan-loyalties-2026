@@ -48,9 +48,12 @@
   .snapshot-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:0.75rem}
   .snapshot-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1.1;color:var(--white);margin-bottom:0.4rem}
   .snapshot-sub{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.4}
-  .snapshot-card.accent-orange{background:linear-gradient(135deg,var(--orange) 0%,#c74d1a 100%)}
+  .snapshot-card.accent-orange{background:linear-gradient(135deg,var(--orange) 0%,#c74d1a 100%);border:3px solid #FDBB30}
+  .snapshot-card.accent-orange::before{background:#FDBB30}
   .snapshot-card.accent-green{background:linear-gradient(135deg,var(--green) 0%,#155229 100%)}
   .snapshot-card.accent-red{background:linear-gradient(135deg,var(--red) 0%,#7a2020 100%)}
+  .snapshot-card.accent-gray{background:linear-gradient(135deg,#4a4a4a 0%,#2a2a2a 100%);border:3px solid #888}
+  .snapshot-card.accent-gray::before{background:#888}
   
   /* TEAM-SPECIFIC SNAPSHOT COLORS */
   .snapshot-card.fever{background:#002D62;border:3px solid #FDBB30}
@@ -90,7 +93,6 @@
 
   /* FOOTER */
   footer{text-align:center;font-size:12px;color:var(--mid);padding:2.5rem 1rem;border-top:1px solid var(--border);line-height:1.7;margin-top:1rem}
-  footer a{color:var(--orange);text-decoration:none;font-weight:500}
 
   @media(max-width:680px){
     .hero{padding:2.5rem 1.5rem 2.5rem}
@@ -111,9 +113,9 @@
 <div class="hero">
   <div class="eyebrow">No Cap Space Discord · April 2026 Survey</div>
   <h1 class="hero-title">Fan <span>Loyalties</span><br>2026 WNBA</h1>
-  <p class="hero-sub">Where 36 NCS Discord members are putting their hearts — and their hate watches — this season.</p>
+  <p class="hero-sub">Where 37 NCS Discord members are putting their hearts — and their hate watches — this season.</p>
   <div class="hero-chips">
-    <span class="chip hot">11 Fever stans</span>
+    <span class="chip hot">12 Fever stans</span>
     <span class="chip">5 Aces fans</span>
     <span class="chip">4 Valkyries fans</span>
     <span class="chip">3 Dream fans</span>
@@ -127,7 +129,7 @@
   <!-- STATS -->
   <div class="stat-row">
     <div class="stat-card">
-      <div class="stat-num">36</div>
+      <div class="stat-num">37</div>
       <div class="stat-label">Discord members surveyed</div>
     </div>
     <div class="stat-card">
@@ -135,7 +137,7 @@
       <div class="stat-label">Teams with at least one primary fan</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">31%</div>
+      <div class="stat-num">32%</div>
       <div class="stat-label">Of group backing the Indiana Fever</div>
     </div>
   </div>
@@ -184,46 +186,47 @@
 </div>
 
 <footer>
-  Survey conducted April 13–14, 2026 &nbsp;·&nbsp; No Cap Space Discord &nbsp;·&nbsp; n = 36 respondents<br>
-  <a href="https://nocapspace.com" target="_blank">No Cap Space</a> · Independent Women's Basketball Coverage
+  Survey conducted April 13–14, 2026 &nbsp;·&nbsp; No Cap Space Discord &nbsp;·&nbsp; n = 37 respondents
 </footer>
 
 <script>
-// Team color mapping
+// Team color mapping - UPDATED COLORS
 const teamColors={
   'Indiana Fever':'#002D62',
   'Las Vegas Aces':'#C8102E',
-  'Golden State Valkyries':'#6F2C91',
+  'Golden State Valkyries':'#B58CCC', // lighter violet
   'New York Liberty':'#86CFDA',
   'Seattle Storm':'#2C5234',
   'Atlanta Dream':'#C8102E',
   'Washington Mystics':'#002B5C',
   'Dallas Wings':'#C4D600',
-  'Los Angeles Sparks':'#702F8A',
+  'Los Angeles Sparks':'#FDB927', // yellow
   'Minnesota Lynx':'#266092',
-  'Toronto Tempo':'#6F2C91',
+  'Toronto Tempo':'#862633', // maroon
   'Phoenix Mercury':'#CB6015',
-  'Chicago Sky':'#5091CD'
+  'Chicago Sky':'#5091CD',
+  'Connecticut Sun':'#C8102E'
 };
 
-const primary=[['Indiana Fever',11],['Las Vegas Aces',5],['Golden State Valkyries',4],['New York Liberty',3],['Seattle Storm',3],['Atlanta Dream',3],['Washington Mystics',2],['Dallas Wings',2],['Los Angeles Sparks',1],['Minnesota Lynx',1],['Toronto Tempo',1]];
-const secondary=[['Atlanta Dream',7],['Golden State Valkyries',5],['Washington Mystics',5],['Minnesota Lynx',4],['Dallas Wings',3],['Indiana Fever',3],['New York Liberty',2],['Las Vegas Aces',2],['Phoenix Mercury',2],['Chicago Sky',1],['Toronto Tempo',1],['Seattle Storm',1]];
-const hate1={'Indiana Fever':7,'New York Liberty':7,'Chicago Sky':6,'Atlanta Dream':4,'Phoenix Mercury':4,'Las Vegas Aces':3,'Minnesota Lynx':1,'Dallas Wings':1};
-const hate2={'New York Liberty':6,'Las Vegas Aces':6,'Phoenix Mercury':4,'Minnesota Lynx':3,'Los Angeles Sparks':2,'Chicago Sky':2,'Seattle Storm':2,'Indiana Fever':1,'Washington Mystics':1};
+// CORRECTED DATA - Indiana Fever has 12 primary fans!
+const primary=[['Indiana Fever',12],['Las Vegas Aces',5],['Golden State Valkyries',4],['New York Liberty',3],['Seattle Storm',3],['Atlanta Dream',3],['Washington Mystics',2],['Dallas Wings',2],['Los Angeles Sparks',1],['Minnesota Lynx',1],['Toronto Tempo',1]];
+const secondary=[['Atlanta Dream',7],['Washington Mystics',6],['Golden State Valkyries',5],['Minnesota Lynx',4],['Dallas Wings',3],['Indiana Fever',3],['Phoenix Mercury',2],['New York Liberty',2],['Las Vegas Aces',2],['Chicago Sky',2],['Toronto Tempo',1],['Seattle Storm',1]];
+const hate1={'Indiana Fever':7,'New York Liberty':7,'Chicago Sky':6,'Phoenix Mercury':5,'Atlanta Dream':4,'Las Vegas Aces':3,'Minnesota Lynx':1,'Dallas Wings':1};
+const hate2={'New York Liberty':6,'Las Vegas Aces':6,'Phoenix Mercury':4,'Minnesota Lynx':3,'Los Angeles Sparks':2,'Chicago Sky':2,'Seattle Storm':2,'Dallas Wings':1,'Indiana Fever':1,'Washington Mystics':1};
 const hComb={};
 for(const[k,v]of Object.entries(hate1))hComb[k]=(hComb[k]||0)+v;
 for(const[k,v]of Object.entries(hate2))hComb[k]=(hComb[k]||0)+v;
 const hateList=Object.entries(hComb).sort((a,b)=>b[1]-a[1]);
 
-const noHatePct=Math.round((11/36)*100);
+const noHatePct=Math.round((11/37)*100); // 11 people said "No one :)"
 
 // Wrapped-style snapshots
 const snapshots=[
-  {label:'Fan Favorite',value:'Indiana Fever',sub:'11 primary fans · Most loved team<br><em style="font-size:11px;opacity:0.85;">But also, we\'re annoying sometimes. Sorry y\'all.</em>',accent:'fever'},
+  {label:'Fan Favorite',value:'Indiana Fever',sub:'12 primary fans · Most loved team<br><em style="font-size:11px;opacity:0.85;">But also, we\'re annoying sometimes. Sorry y\'all.</em>',accent:'fever'},
   {label:'Most Hated',value:'New York Liberty',sub:'13 total hate watchers<br><em style="font-size:11px;opacity:0.85;">Even though we all love Andrew, we apparently really hate the Liberty.</em>',accent:'liberty'},
   {label:'The Bridesmaid',value:'Atlanta Dream',sub:'7 secondary fans, 3 primary · Always the backup plan',accent:'dream'},
   {label:'Switzerland',value:`${noHatePct}%`,sub:'Said they\'re ethically hating on no one',accent:'accent-orange'},
-  {label:'Lonely Hearts Club',value:'Portland Fire 😔',sub:'Zero primary or secondary fans in our Discord',accent:''}
+  {label:'Lonely Hearts Club',value:'Portland Fire 😔<br>Connecticut Sun 😔',sub:'Zero primary or secondary fans in our Discord',accent:'accent-gray'}
 ];
 
 document.getElementById('snapshots').innerHTML=snapshots.map(s=>
@@ -242,7 +245,7 @@ function bars(id,data,max,type){
   }).join('');
 }
 
-bars('primary-bars',primary,11,'primary');
+bars('primary-bars',primary,12,'primary');
 bars('secondary-bars',secondary,7,'secondary');
 bars('hate-bars',hateList,13,'hate');
 
@@ -272,7 +275,7 @@ document.getElementById('team-grid').innerHTML=allTeams.map(t=>{
     <div class="stat-list">
       <div class="stat-row-item">
         <div class="stat-row-label"><span class="stat-dot" style="background:${color}"></span>Primary fans</div>
-        ${makeBar(p,11,color)}
+        ${makeBar(p,12,color)}
         <div class="stat-row-num">${p}</div>
       </div>
       <div class="stat-row-item">
