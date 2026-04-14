@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCS Discord · WNBA 2026 Fan Loyalties</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --orange:#E85D26;--orange-lt:#FAEADE;--orange-dk:#9C3910;
+    --green:#1D6B3C;--green-lt:#E3F2E9;
+    --red:#A32D2D;--red-lt:#FCEBEB;
+    --charcoal:#141414;--mid:#777;--light:#F7F4EF;
+    --white:#fff;--border:rgba(0,0,0,0.10);
+  }
+  body{font-family:'DM Sans',sans-serif;background:var(--light);color:var(--charcoal);min-height:100vh}
+
+  /* HERO */
+  .hero{background:var(--charcoal);color:var(--white);padding:3.5rem 2.5rem 3rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-80px;right:-60px;width:300px;height:300px;border-radius:50%;background:var(--orange);opacity:0.15}
+  .hero::after{content:'';position:absolute;bottom:-100px;left:-30px;width:220px;height:220px;border-radius:50%;background:var(--orange);opacity:0.08}
+  .eyebrow{font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:0.6rem}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,5.5rem);line-height:0.95;color:var(--white);position:relative;z-index:1}
+  .hero-title span{color:var(--orange)}
+  .hero-sub{font-size:15px;color:rgba(255,255,255,0.55);margin-top:0.75rem;position:relative;z-index:1;max-width:520px;line-height:1.5}
+  .hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem;position:relative;z-index:1}
+  .chip{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.18);border-radius:20px;font-size:12px;padding:5px 14px;color:rgba(255,255,255,0.7)}
+  .chip.hot{background:var(--orange);color:var(--white);border-color:var(--orange);font-weight:500}
+
+  /* LAYOUT */
+  .container{max-width:860px;margin:0 auto;padding:2.5rem 2rem 4rem}
+  .section{margin-bottom:3.5rem}
+  .section-header{margin-bottom:1.5rem}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.75rem,4vw,2.25rem);color:var(--charcoal);margin-bottom:0.35rem;letter-spacing:0.02em}
+  .section-note{font-size:13px;color:var(--mid);font-style:italic}
+
+  /* STAT CARDS */
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:3rem}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;text-align:center}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;color:var(--orange)}
+  .stat-label{font-size:12px;color:var(--mid);margin-top:4px;line-height:1.4}
+
+  /* WRAPPED-STYLE SNAPSHOTS */
+  .snapshot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:3.5rem}
+  .snapshot-card{background:linear-gradient(135deg,var(--charcoal) 0%,#2a2a2a 100%);border-radius:16px;padding:1.75rem 1.5rem;color:var(--white);position:relative;overflow:hidden;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+  .snapshot-card::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:var(--orange);opacity:0.1}
+  .snapshot-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:0.75rem}
+  .snapshot-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1.1;color:var(--white);margin-bottom:0.4rem}
+  .snapshot-sub{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.4}
+  .snapshot-card.accent-orange{background:linear-gradient(135deg,var(--orange) 0%,#c74d1a 100%)}
+  .snapshot-card.accent-green{background:linear-gradient(135deg,var(--green) 0%,#155229 100%)}
+  .snapshot-card.accent-red{background:linear-gradient(135deg,var(--red) 0%,#7a2020 100%)}
+  
+  /* TEAM-SPECIFIC SNAPSHOT COLORS */
+  .snapshot-card.fever{background:#002D62;border:3px solid #FDBB30}
+  .snapshot-card.fever::before{background:#FDBB30}
+  .snapshot-card.liberty{background:#86CFDA;color:#141414;border:2px solid #000}
+  .snapshot-card.liberty .snapshot-label{color:rgba(0,0,0,0.6)}
+  .snapshot-card.liberty .snapshot-value{color:#000}
+  .snapshot-card.liberty .snapshot-sub{color:rgba(0,0,0,0.7)}
+  .snapshot-card.liberty::before{background:#000;opacity:0.05}
+  .snapshot-card.dream{background:#C8102E;border:3px solid #5BCEFA}
+  .snapshot-card.dream::before{background:#5BCEFA}
+
+  /* BAR CHARTS */
+  .bar-list{display:flex;flex-direction:column;gap:11px}
+  .bar-item{display:grid;grid-template-columns:180px 1fr 32px;align-items:center;gap:12px}
+  .bar-team{font-size:13px;font-weight:500;color:var(--charcoal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar-track{background:rgba(0,0,0,0.07);border-radius:5px;height:11px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:5px;transition:width 1s cubic-bezier(0.16,1,0.3,1)}
+  .bar-count{font-size:12px;font-weight:600;color:var(--mid);text-align:right}
+
+  /* TEAM GRID - NEW LABELED DESIGN */
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .team-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.4rem;transition:border-color 0.15s,box-shadow 0.15s,transform 0.15s}
+  .team-card:hover{border-color:var(--orange);box-shadow:0 4px 16px rgba(232,93,38,0.15);transform:translateY(-2px)}
+  .tc-name{font-size:15px;font-weight:600;margin-bottom:14px;line-height:1.3;color:var(--charcoal);padding-bottom:10px;border-bottom:1px solid var(--border)}
+  .stat-list{display:flex;flex-direction:column;gap:10px}
+  .stat-row-item{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .stat-row-label{font-size:11px;color:var(--mid);display:flex;align-items:center;gap:6px}
+  .stat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .stat-row-bar{flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;max-width:80px}
+  .stat-row-fill{height:100%;border-radius:3px}
+  .stat-row-num{font-size:13px;font-weight:600;color:var(--charcoal);min-width:16px;text-align:right}
+
+  /* HATE SECTION */
+  .hate-box{background:#FBF0ED;border:1px solid rgba(168,45,45,0.15);border-radius:12px;padding:1.5rem}
+  .hate-intro{font-size:12px;color:#888;margin-bottom:1.25rem}
+
+  /* FOOTER */
+  footer{text-align:center;font-size:12px;color:var(--mid);padding:2.5rem 1rem;border-top:1px solid var(--border);line-height:1.7;margin-top:1rem}
+  footer a{color:var(--orange);text-decoration:none;font-weight:500}
+
+  @media(max-width:680px){
+    .hero{padding:2.5rem 1.5rem 2.5rem}
+    .container{padding:2rem 1.25rem 3rem}
+    .stat-row{grid-template-columns:repeat(3,1fr);gap:10px}
+    .stat-card{padding:1rem 1.1rem}
+    .stat-num{font-size:2.2rem}
+    .bar-item{grid-template-columns:130px 1fr 28px;gap:8px}
+    .bar-team{font-size:12px}
+    .snapshot-grid{grid-template-columns:1fr;gap:12px}
+    .snapshot-card{min-height:160px;padding:1.5rem 1.25rem}
+    .team-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">No Cap Space Discord · April 2026 Survey</div>
+  <h1 class="hero-title">Fan <span>Loyalties</span><br>2026 WNBA</h1>
+  <p class="hero-sub">Where 36 NCS Discord members are putting their hearts — and their hate watches — this season.</p>
+  <div class="hero-chips">
+    <span class="chip hot">11 Fever stans</span>
+    <span class="chip">5 Aces fans</span>
+    <span class="chip">4 Valkyries fans</span>
+    <span class="chip">3 Dream fans</span>
+    <span class="chip">3 Liberty fans</span>
+    <span class="chip">3 Storm fans</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">36</div>
+      <div class="stat-label">Discord members surveyed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">11</div>
+      <div class="stat-label">Teams with at least one primary fan</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">31%</div>
+      <div class="stat-label">Of group backing the Indiana Fever</div>
+    </div>
+  </div>
+
+  <!-- WRAPPED-STYLE SNAPSHOTS -->
+  <div class="snapshot-grid" id="snapshots"></div>
+
+  <!-- PRIMARY FANDOM -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Primary Fan Loyalties</div>
+      <div class="section-note">Where's your heart this season?</div>
+    </div>
+    <div class="bar-list" id="primary-bars"></div>
+  </div>
+
+  <!-- SECONDARY FANDOM -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Secondary Fandom</div>
+      <div class="section-note">Who else are you cheering for?</div>
+    </div>
+    <div class="bar-list" id="secondary-bars"></div>
+  </div>
+
+  <!-- HATE WATCH -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">The Hate Watch Board</div>
+      <div class="section-note">Combined primary + secondary mentions</div>
+    </div>
+    <div class="hate-box">
+      <div class="hate-intro">Who are people tuning in to watch lose? (Ethical hate only, per the NCS code of conduct.)</div>
+      <div class="bar-list" id="hate-bars"></div>
+    </div>
+  </div>
+
+  <!-- TEAM BREAKDOWN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Team-by-Team Snapshot</div>
+    </div>
+    <div class="team-grid" id="team-grid"></div>
+  </div>
+
+</div>
+
+<footer>
+  Survey conducted April 13–14, 2026 &nbsp;·&nbsp; No Cap Space Discord &nbsp;·&nbsp; n = 36 respondents<br>
+  <a href="https://nocapspace.com" target="_blank">No Cap Space</a> · Independent Women's Basketball Coverage
+</footer>
+
+<script>
+// Team color mapping
+const teamColors={
+  'Indiana Fever':'#002D62',
+  'Las Vegas Aces':'#C8102E',
+  'Golden State Valkyries':'#6F2C91',
+  'New York Liberty':'#86CFDA',
+  'Seattle Storm':'#2C5234',
+  'Atlanta Dream':'#C8102E',
+  'Washington Mystics':'#002B5C',
+  'Dallas Wings':'#C4D600',
+  'Los Angeles Sparks':'#702F8A',
+  'Minnesota Lynx':'#266092',
+  'Toronto Tempo':'#6F2C91',
+  'Phoenix Mercury':'#CB6015',
+  'Chicago Sky':'#5091CD'
+};
+
+const primary=[['Indiana Fever',11],['Las Vegas Aces',5],['Golden State Valkyries',4],['New York Liberty',3],['Seattle Storm',3],['Atlanta Dream',3],['Washington Mystics',2],['Dallas Wings',2],['Los Angeles Sparks',1],['Minnesota Lynx',1],['Toronto Tempo',1]];
+const secondary=[['Atlanta Dream',7],['Golden State Valkyries',5],['Washington Mystics',5],['Minnesota Lynx',4],['Dallas Wings',3],['Indiana Fever',3],['New York Liberty',2],['Las Vegas Aces',2],['Phoenix Mercury',2],['Chicago Sky',1],['Toronto Tempo',1],['Seattle Storm',1]];
+const hate1={'Indiana Fever':7,'New York Liberty':7,'Chicago Sky':6,'Atlanta Dream':4,'Phoenix Mercury':4,'Las Vegas Aces':3,'Minnesota Lynx':1,'Dallas Wings':1};
+const hate2={'New York Liberty':6,'Las Vegas Aces':6,'Phoenix Mercury':4,'Minnesota Lynx':3,'Los Angeles Sparks':2,'Chicago Sky':2,'Seattle Storm':2,'Indiana Fever':1,'Washington Mystics':1};
+const hComb={};
+for(const[k,v]of Object.entries(hate1))hComb[k]=(hComb[k]||0)+v;
+for(const[k,v]of Object.entries(hate2))hComb[k]=(hComb[k]||0)+v;
+const hateList=Object.entries(hComb).sort((a,b)=>b[1]-a[1]);
+
+const noHatePct=Math.round((11/36)*100);
+
+// Wrapped-style snapshots
+const snapshots=[
+  {label:'Fan Favorite',value:'Indiana Fever',sub:'11 primary fans · Most loved team<br><em style="font-size:11px;opacity:0.85;">But also, we\'re annoying sometimes. Sorry y\'all.</em>',accent:'fever'},
+  {label:'Most Hated',value:'New York Liberty',sub:'13 total hate watchers<br><em style="font-size:11px;opacity:0.85;">Even though we all love Andrew, we apparently really hate the Liberty.</em>',accent:'liberty'},
+  {label:'The Bridesmaid',value:'Atlanta Dream',sub:'7 secondary fans, 3 primary · Always the backup plan',accent:'dream'},
+  {label:'Switzerland',value:`${noHatePct}%`,sub:'Said they\'re ethically hating on no one',accent:'accent-orange'},
+  {label:'Lonely Hearts Club',value:'Portland Fire 😔',sub:'Zero primary or secondary fans in our Discord',accent:''}
+];
+
+document.getElementById('snapshots').innerHTML=snapshots.map(s=>
+  `<div class="snapshot-card ${s.accent}">
+    <div class="snapshot-label">${s.label}</div>
+    <div class="snapshot-value">${s.value}</div>
+    <div class="snapshot-sub">${s.sub}</div>
+  </div>`
+).join('');
+
+function bars(id,data,max,type){
+  document.getElementById(id).innerHTML=data.map(([team,n])=>{
+    const pct=Math.round(n/max*100);
+    const color=teamColors[team]||'var(--mid)';
+    return`<div class="bar-item"><div class="bar-team">${team}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${color}" data-pct="${pct}%"></div></div><div class="bar-count">${n}</div></div>`;
+  }).join('');
+}
+
+bars('primary-bars',primary,11,'primary');
+bars('secondary-bars',secondary,7,'secondary');
+bars('hate-bars',hateList,13,'hate');
+
+// Animate bars
+requestAnimationFrame(()=>{
+  document.querySelectorAll('.bar-fill[data-pct]').forEach(el=>{
+    setTimeout(()=>{el.style.width=el.dataset.pct},80);
+  });
+});
+
+// Team grid with labels
+const allTeams=[...new Set([...primary.map(d=>d[0]),...secondary.map(d=>d[0]),...Object.keys(hComb)])].sort();
+const pMap=Object.fromEntries(primary);
+const sMap=Object.fromEntries(secondary);
+
+document.getElementById('team-grid').innerHTML=allTeams.map(t=>{
+  const p=pMap[t]||0,s=sMap[t]||0,h=hComb[t]||0;
+  const color=teamColors[t]||'var(--mid)';
+  
+  const makeBar=(val,max,barColor)=>{
+    const pct=Math.round(val/max*100);
+    return`<div class="stat-row-bar"><div class="stat-row-fill" style="width:${pct}%;background:${barColor}"></div></div>`;
+  };
+  
+  return`<div class="team-card">
+    <div class="tc-name">${t}</div>
+    <div class="stat-list">
+      <div class="stat-row-item">
+        <div class="stat-row-label"><span class="stat-dot" style="background:${color}"></span>Primary fans</div>
+        ${makeBar(p,11,color)}
+        <div class="stat-row-num">${p}</div>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-row-label"><span class="stat-dot" style="background:var(--green)"></span>Secondary fans</div>
+        ${makeBar(s,7,'var(--green)')}
+        <div class="stat-row-num">${s}</div>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-row-label"><span class="stat-dot" style="background:var(--red)"></span>Haters</div>
+        ${makeBar(h,13,'var(--red)')}
+        <div class="stat-row-num">${h}</div>
+      </div>
+    </div>
+  </div>`;
+}).join('');
+</script>
+</body>
+</html>
